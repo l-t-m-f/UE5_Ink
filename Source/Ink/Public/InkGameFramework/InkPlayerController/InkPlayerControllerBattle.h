@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "InkGameFramework/InkPlayerController/InkPlayerController.h"
-#include "InkPlayerControllerStandard.generated.h"
+#include "InkPlayerControllerBattle.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class INK_API AInkPlayerControllerStandard final : public AInkPlayerController
+class INK_API AInkPlayerControllerBattle : public AInkPlayerController
 {
 	GENERATED_BODY()
 	

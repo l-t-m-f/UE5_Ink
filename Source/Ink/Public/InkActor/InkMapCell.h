@@ -10,23 +10,24 @@ UCLASS()
 class INK_API AInkMapCell final : public AActor
 {
 	GENERATED_BODY()
-	
-	// CLASS PROPERTIES	
 
-	// CONSTRUCTOR(S)	
-public:	
+public:
 	AInkMapCell();
+
+	UFUNCTION(BlueprintGetter)
+	UStaticMeshComponent *GetCellMesh() const;
 	
-	// GETTER METHODS
+	UFUNCTION(BlueprintSetter)
+	void SetCellMesh(UStaticMeshComponent *Value);
 	
-	// SETTER METHODS
+	virtual void Tick(float DeltaTime) override;
 	
-	//OVERRIDEN FUNCTIONS
 protected:
 	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-
-	// CLASS FUNCTIONS
+	
+private:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetCellMesh, BlueprintSetter=SetCellMesh)
+	UStaticMeshComponent *CellMesh;
+	
 };

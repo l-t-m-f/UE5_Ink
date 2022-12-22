@@ -3,6 +3,10 @@
 #define DEBUG
 
 #include "CoreMinimal.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h" 
+#include "InkGameFramework/InkHUD.h"
+#include "InputMappingContext.h" 
 #include "GameFramework/PlayerController.h"
 #include "InkPlayerController.generated.h"
 
@@ -10,16 +14,24 @@ UCLASS()
 class INK_API AInkPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-	// CLASS PROPERTIES	
 
-	// CONSTRUCTOR(S)
+public:
+	//Methods
+	UFUNCTION(BlueprintGetter)
+	TSoftObjectPtr<UInputMappingContext> GetInputMapping();
 	
-	// GETTER FUNCTIONS
+	UFUNCTION(BlueprintSetter)
+	void SetInputMapping(const TSoftObjectPtr<UInputMappingContext> Value);
+
+protected:
+	//Methods
+	UFUNCTION()
+	void InitializeInput();
 	
-	// SETTER FUNCTIONS
-
-	// OVERRIDEN FUNCTIONS
-
-	// CLASS FUNCTIONS
+private:
+	//Properties
+	UPROPERTY(EditDefaultsOnly, Category="Input",
+		BlueprintGetter=GetInputMapping, BlueprintSetter=SetInputMapping)
+	TSoftObjectPtr<UInputMappingContext> InputMapping;
+	
 };

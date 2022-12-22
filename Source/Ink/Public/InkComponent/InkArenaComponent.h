@@ -6,6 +6,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "InkGameFramework/InkHUD.h"
 #include "InkActor/InkMapCell.h"
 #include "InkArenaComponent.generated.h"
 
@@ -14,55 +15,59 @@ class INK_API UInkArenaComponent final : public UActorComponent
 {
 	GENERATED_BODY()
 	
-	// CLASS PROPERTIES
 public:
-	UPROPERTY(BlueprintReadOnly)
-	uint8 Width = 7;
-	
-public:
-	UPROPERTY(BlueprintReadOnly)
-	uint8 Height = 7;
-	
-public:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<AInkMapCell> CellClass;
-	
-public:
-	UPROPERTY(BlueprintReadOnly)
-	TArray<AInkMapCell *> Cells;
-
-	// CONSTRUCTOR(S)
-public:	
 	UInkArenaComponent();
 	
-	// GETTER METHODS
-public:
+	UFUNCTION(BlueprintGetter)
+	uint8 GetBufferBetweenCell() const;
+	
 	UFUNCTION(BlueprintGetter)
 	TArray<AInkMapCell *> GetCells();
 
-public:
 	UFUNCTION(BlueprintGetter)
-	uint8 GetWidth() const;
+	uint8 GetCellCountW() const;
 	
 	UFUNCTION(BlueprintGetter)
-	uint8 GetHeight() const;
+	uint8 GetCellCountH() const;
 
-	// SETTER METHODS
+	UFUNCTION(BlueprintGetter)
+	TSubclassOf<AInkMapCell> GetCellClass() const;
+	
+	UFUNCTION(BlueprintGetter)
+	int GetDistanceBetweenCell() const;
 
-	// OVERRIDEN FUNCTIONS
-protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	// CLASS FUNCTIONS
-
-public:
+	UFUNCTION(BlueprintSetter)
+	void SetCellClass(TSubclassOf<AInkMapCell> Value);
+	
 	UFUNCTION(BlueprintCallable)
 	void InitCells();
-
+	
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+		override;
+	
+protected:
+	virtual void BeginPlay()
+		override;
+	
 private:
-	void CreateCell(const uint8 X, const uint8 Y) const;
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetCellCountW)
+	uint8 CellCountW = 7;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetCellCountH)
+	uint8 CellCountH = 7;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetBufferBetweenCell)
+	uint8 BufferBetweenCell = 2;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetDistanceBetweenCell)
+	int DistanceBetweenCell = 100;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetCellClass, BlueprintSetter=SetCellClass)
+	TSubclassOf<AInkMapCell> CellClass;
+	
+	UPROPERTY(BlueprintGetter=GetCells)
+	TArray<AInkMapCell *> Cells;
+
+	void CreateCell(const int X, const int Y) const;
 		
 };

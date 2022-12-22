@@ -14,8 +14,8 @@ class INK_API AInkGameModeStandard final : public AInkGameModeBase
 	
 	// CLASS PROPERTIES
 
-public:
-	UPROPERTY(BlueprintReadOnly)
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetArenaComponent, BlueprintSetter=SetArenaComponent)
 	UInkArenaComponent *ArenaComponent;
 
 	// CONSTRUCTOR(S)
@@ -24,17 +24,19 @@ public:
 	
 	// GETTER FUNCTIONS
 
-protected:
+public:
 	UFUNCTION(BlueprintGetter)
 	UInkArenaComponent *GetArenaComponent() const;
 	
 	// SETTER FUNCTIONS
 
 private:
+	UFUNCTION(BlueprintSetter)
 	void SetArenaComponent(UInkArenaComponent *Value);
 
 	// OVERRIDEN FUNCTIONS
-	protected:
+
+protected:
 	virtual void BeginPlay() override;	
 
 	// CLASS FUNCTIONS
