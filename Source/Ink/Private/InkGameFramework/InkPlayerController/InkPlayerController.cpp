@@ -5,9 +5,19 @@ TSoftObjectPtr<UInputMappingContext> AInkPlayerController::GetInputMapping()
 	return InputMapping;
 }
 
+TSubclassOf<AInkDebugPawn> AInkPlayerController::GetDebugPawnClass() const
+{
+	return DebugPawnClass;
+}
+
 void AInkPlayerController::SetInputMapping(const TSoftObjectPtr<UInputMappingContext> Value)
 {
 	InputMapping = Value;
+}
+
+void AInkPlayerController::SetDebugPawnClass(const TSubclassOf<AInkDebugPawn> Value)
+{
+	DebugPawnClass = Value;
 }
 
 void AInkPlayerController::InitializeInput()

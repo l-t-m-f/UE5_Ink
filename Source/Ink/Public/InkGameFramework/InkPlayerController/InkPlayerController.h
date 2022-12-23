@@ -8,6 +8,7 @@
 #include "InkGameFramework/InkHUD.h"
 #include "InputMappingContext.h" 
 #include "GameFramework/PlayerController.h"
+#include "InkActor/InkDebugPawn.h"
 #include "InkPlayerController.generated.h"
 
 UCLASS()
@@ -19,9 +20,15 @@ public:
 	//Methods
 	UFUNCTION(BlueprintGetter)
 	TSoftObjectPtr<UInputMappingContext> GetInputMapping();
+
+	UFUNCTION(BlueprintGetter)
+	TSubclassOf<AInkDebugPawn> GetDebugPawnClass() const;
 	
 	UFUNCTION(BlueprintSetter)
 	void SetInputMapping(const TSoftObjectPtr<UInputMappingContext> Value);
+
+	UFUNCTION(BlueprintSetter)
+	void SetDebugPawnClass(TSubclassOf<AInkDebugPawn> Value);
 
 protected:
 	//Methods
@@ -33,5 +40,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="Input",
 		BlueprintGetter=GetInputMapping, BlueprintSetter=SetInputMapping)
 	TSoftObjectPtr<UInputMappingContext> InputMapping;
+
+	UPROPERTY(EditAnywhere, Category="Debug",
+		BlueprintGetter=GetDebugPawnClass, BlueprintSetter=SetDebugPawnClass)
+	TSubclassOf<AInkDebugPawn> DebugPawnClass;
 	
 };

@@ -3,6 +3,8 @@
 #define DEBUG
 
 #include "CoreMinimal.h"
+#include "UObject/Class.h" 
+#include "InkActor/InkDebugPawn.h"
 #include "Components/CapsuleComponent.h" 
 #include "Camera/CameraComponent.h"
 #include "InkGameFramework/InkHUD.h"
@@ -49,6 +51,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Controls|Camera")
 	void LookUpDown(const float AxisValue) const;
+
+	UFUNCTION(BlueprintCallable, Category="Debug")
+	int EnterDebugCamera();
 
 protected:
 	//Methods

@@ -1,5 +1,11 @@
 #include "InkGameFramework/InkCharacter.h"
 
+#include "InkEngine/InkGameInstance.h"
+#include "InkGameFramework/InkGameMode/InkGameModeStandard.h"
+#include "InkGameFramework/InkPlayerController/InkPlayerControllerOverworld.h"
+#include "InkKismet/InkStaticFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h" 
+
 AInkCharacter::AInkCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -36,7 +42,8 @@ UStaticMeshComponent* AInkCharacter::GetDebugStaticMesh2() const
 void AInkCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	AInkHUD::PrintToScreen("Character created (Custom CPP).");	
+	AInkHUD::PrintToScreen("Character created (Custom CPP).");
+	Cast<AInkGameModeStandard>(UGameplayStatics::GetGameMode(GetWorld()))->SetMainPlayerInstance(this);
 }
 
 void AInkCharacter::SetDebugStaticMesh1(UStaticMeshComponent* Value)
@@ -84,6 +91,16 @@ void AInkCharacter::LookLeftRight(const float AxisValue) const
 void AInkCharacter::LookUpDown(const float AxisValue) const
 {
 	GetCameraSpringArmComponent()->AddRelativeRotation(FRotator(AxisValue, 0, 0));
+}
+
+int AInkCharacter::EnterDebugCamera()
+{
+	const AInkPlayerController *PlayerController = Cast<AInkPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	const FVector Position = GetActorLocation();
+	AActor *DebugCamera = GetWorld()->SpawnActor(PlayerController->GetDebugPawnClass(), &Position);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->Possess(Cast<APawn>(DebugCamera));
+	AInkHUD::PrintToScreen("Entered DebugCamera");
+	return 1;
 }
 
 void AInkCharacter::SetCameraComponent(UCameraComponent* Value)

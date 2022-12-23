@@ -56,10 +56,9 @@ void UInkArenaComponent::InitCells()
 	{
 		for(int j = 0; j < CellCountH; j++)
 		{
-			//GetCells().Push(CreateDefaultSubobject<AInkMapCell>(TEXT("Cell")));
 			GetCells().Push(NewObject<AInkMapCell>(AInkMapCell::StaticClass()));
 			CreateCell(i * GetDistanceBetweenCell() + (i * GetBufferBetweenCell()), j * GetDistanceBetweenCell() + (j * GetBufferBetweenCell()));
-			AInkHUD::PrintfToScreen(TEXT("%d, %d: Cell created #%d"), i, j, (i + j));
+			//AInkHUD::PrintfToScreen(TEXT("%d, %d: Cell created #%d"), i, j, (i + j));
 		}
 	}
 }
